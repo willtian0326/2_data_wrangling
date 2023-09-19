@@ -5,5 +5,36 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
+```{r}
+library(tidyverse)
+```
+
+Let's import the FAs_litters.csv dataset using relative path. Using relative path ensures reproducibility. 
+
+```{r}
+litters_df = 
+  read_csv(file = "./data/FAS_litters.csv")
+
+litters_df =
+  janitor::clean_names(litters_df)
+
+# :: allows me to use a janitor function without loading the entire package.
+# Above code cleans up variable names (removing spaces for access)
+
+litters_df
+```
+
+Learning assessment: importing another dataset
+
+```{r}
+pups_df =
+  read_csv("./data/FAS_pups.csv")
+
+pups_df =
+  janitor::clean_names(pups_df)
+
+pups_df
+```
+
 
 
