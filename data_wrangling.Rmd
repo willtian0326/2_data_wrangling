@@ -5,8 +5,11 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 
+## Importing Data:
+
 ```{r}
 library(tidyverse)
+library(readxl)
 ```
 
 Let's import the FAs_litters.csv dataset using relative path. Using relative path ensures reproducibility. 
@@ -21,10 +24,9 @@ litters_df =
 # :: allows me to use a janitor function without loading the entire package.
 # Above code cleans up variable names (removing spaces for access)
 
-litters_df
 ```
 
-Learning assessment: importing another dataset
+Importing pups dataset:
 
 ```{r}
 pups_df =
@@ -33,7 +35,63 @@ pups_df =
 pups_df =
   janitor::clean_names(pups_df)
 
-pups_df
+```
+
+## Looking at Data:
+
+View data directly:
+
+```{r}
+litters_df
+
+head(litters_df)
+
+tail(litters_df)
+```
+
+Look at data summary:
+
+```{r}
+skimr::skim(litters_df)
+```
+
+## Options in `read_*`
+
+```{r}
+litters_df =
+  read_csv(
+    "./data/FAS_litters.csv",
+    skip = 10, 
+    col_names = FALSE) # Not using starting line as colnames
+
+litters_df =
+  read_csv(
+    "./data/FAS_litters.csv",
+    na = c('NA', 19)) # 'NA' and number 19 will be treated as NA.
+```
+
+## Other File Types
+
+Importing a xlsx file first.
+
+```{r}
+mlb11_data = read_excel('data/mlb11.xlsx')
+
+head(mlb11_data, 5)
+```
+
+Read an SAS dataset:
+
+```{r}
+library(haven)
+pulse_data = read_sas("./data/public_pulse_data.sas7bdat")
+head(pulse_data, 5)
+```
+
+## Writing File
+
+```{r}
+write_csv(litters_df, 'data/litters_cleaned.csv')
 ```
 
 
