@@ -27,7 +27,7 @@ pups_df =
 
 ## Select
 
-`select` is used to select variables
+`select` is used to select variables, or __cols__.
 
 ```{r, results=FALSE}
 select(litters_df, gd0_weight, group)
@@ -40,9 +40,24 @@ select(litters_df, group, litter_id = litter_number) #renaming litter_number to 
 
 select(litters_df, group, litter_id = litter_number, everything()) #leave everything not mentioned.
 
+select(pups_df, litter_number, sex, pd_ears)
 
 ```
 
 `select` vs. `pull`:
 
 `select` will always return a dataframe, whereas `pull` could return a vector.
+
+```{r}
+select(litters_df, group)
+pull(litters_df, group)
+```
+
+## Filter
+
+Get rid of __rows__ using `filter()`
+
+```{r}
+filter(litters_df, )
+```
+
