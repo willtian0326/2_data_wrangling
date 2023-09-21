@@ -1,0 +1,48 @@
+---
+title: "Data Manipulation"
+author: "Wenxin Tian"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+Importing FAS litters and pups dataset
+
+```{r, results=FALSE, message=FALSE}
+litters_df = 
+  read_csv(file = "./data/FAS_litters.csv")
+
+litters_df =
+  janitor::clean_names(litters_df)
+
+pups_df =
+  read_csv("./data/FAS_pups.csv")
+
+pups_df =
+  janitor::clean_names(pups_df)
+```
+
+## Select
+
+`select` is used to select variables
+
+```{r, results=FALSE}
+select(litters_df, gd0_weight, group)
+
+select(litters_df, -starts_with('gd')) #delete every variable starting with 'gd'
+
+select(litters_df, -litter_number) #only leaving out litter_number
+
+select(litters_df, group, litter_id = litter_number) #renaming litter_number to litter_id
+
+select(litters_df, group, litter_id = litter_number, everything()) #leave everything not mentioned.
+
+
+```
+
+`select` vs. `pull`:
+
+`select` will always return a dataframe, whereas `pull` could return a vector.

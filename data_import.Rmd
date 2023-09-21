@@ -1,5 +1,5 @@
 ---
-title: "Data Wrangling"
+title: "Data Import"
 author: "Wenxin Tian"
 date: "`r Sys.Date()`"
 output: html_document
@@ -7,7 +7,7 @@ output: html_document
 
 ## Importing Data:
 
-```{r}
+```{r, result = FALSE, message = FALSE}
 library(tidyverse)
 library(readxl)
 ```
