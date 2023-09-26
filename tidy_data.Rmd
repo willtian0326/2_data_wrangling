@@ -1,0 +1,47 @@
+---
+title: "Tidy Data"
+author: "Wenxin Tian"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+## Pulse Data
+
+```{r}
+pulse_df = 
+  haven::read_sas('data/public_pulse_data.sas7bdat') |>
+  janitor::clean_names() |>
+  pivot_longer( # convert from wide to long, move cols into rows
+    bdi_score_bl:bdi_score_12m,
+    names_to = 'visit', # variables -> observations
+    values_to = 'bdi_score', # values -> new col
+    names_prefix = 'bdi_score_',
+  ) |>
+  mutate(
+    visit = replace(visit, visit == 'bl', '00m')
+  )
+```
+
+```{r}
+litters_df = 
+  read_csv("data/FAS_litters.csv") |> 
+  janitor::clean_names() |>
+  select(litter_number, gd0_weight, gd18_weight) |>
+  pivot_longer(
+    gd0_weight:gd18_weight,
+    names_to = 'gd',
+    values_to = 'weight'
+  ) |>
+  mutate(
+    gd = case_match(
+      gd, 
+      "gd0_weight" ~ 0,
+      "gd18_weight" ~ 18) # replace every gd0_weight with 0 and gd18_weight with 18
+  )
+```
+
+
